@@ -1,4 +1,4 @@
-
+#Instructions
 add 'ngame' in settings.gradle
 
 include 'desktop', 'android', 'ios', 'html', 'core', 'ngame'
@@ -17,5 +17,5 @@ project(":ngame") {
     }
 }
 
-in build.gradle core dependencies add:
+in build.gradle add for all modules in dependencies this:
 	compile project(":ngame")
