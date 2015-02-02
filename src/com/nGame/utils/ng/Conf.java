@@ -7,7 +7,7 @@ import com.badlogic.gdx.Preferences;
 /**
  * Created by oli on 17.04.2014.
  */
-public class Conf {
+class Conf {
     public static void loadConf() {
         Preferences prefs = Gdx.app.getPreferences("samegameconf");
 

@@ -19,7 +19,7 @@ public class GamePads {
         XBOX360,
         PS3,
         USB
-    };
+    }
 
     int gamepadCount=0;
 

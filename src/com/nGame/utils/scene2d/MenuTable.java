@@ -7,7 +7,7 @@ import com.nGame.utils.ng.Assets;
 public class MenuTable extends Table {
 
     //private float fontScale;
-    int align = Align.center;
+    private int align = Align.center;
 
     public MenuTable(float padding, int align) {
         super(Assets.I.skin);

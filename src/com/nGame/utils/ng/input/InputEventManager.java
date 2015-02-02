@@ -18,13 +18,13 @@ import java.util.HashMap;
 public class InputEventManager extends InputListener implements ControllerListener{
 
     private final boolean hasGamePad;
-    GamePads gamepads;
+    private GamePads gamepads;
     private HashMap<String,InputResponceEvent> events;
 
-    HashMap<Integer,String> keyUpBinding = new HashMap<Integer,String>();
-    HashMap<Integer,String> keyDownBinding = new HashMap<Integer,String>();
-    Array<HashMap<Integer,String>> gamePadBindings = new Array<HashMap<Integer, String>>();
-    Array<HashMap<PovDirection,String>> gamePadPovBindings = new Array<HashMap<PovDirection, String>>();
+    private HashMap<Integer,String> keyUpBinding = new HashMap<Integer,String>();
+    private HashMap<Integer,String> keyDownBinding = new HashMap<Integer,String>();
+    private Array<HashMap<Integer,String>> gamePadBindings = new Array<HashMap<Integer, String>>();
+    private Array<HashMap<PovDirection,String>> gamePadPovBindings = new Array<HashMap<PovDirection, String>>();
 
 
 
@@ -90,7 +90,7 @@ public class InputEventManager extends InputListener implements ControllerListen
     }
 
 
-    public void fireEvent(String eventIdentifier,float value) {
+    void fireEvent(String eventIdentifier, float value) {
         if(events.containsKey(eventIdentifier)){
             events.get(eventIdentifier).onAction(value);
         } else {

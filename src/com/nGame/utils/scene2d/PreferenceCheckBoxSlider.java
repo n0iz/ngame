@@ -11,7 +11,7 @@ import com.nGame.utils.ng.Assets;
 
 public abstract class PreferenceCheckBoxSlider extends PreferenceCheckBox {
 
-    public Slider slider;
+    private Slider slider;
 
     public PreferenceCheckBoxSlider(String label, int width, int height, float min, float max, float stepSize) {
         super(label, width, height);

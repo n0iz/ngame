@@ -11,39 +11,36 @@ import java.util.Iterator;
 
 /**
  * Implementation of first loose QuadTree in reference to T. Ulrich
+ * QuadTree, optimized for moving objects.
+ * <p/>
+ * If you move an object you have to delete and reinsert the object.
  *
  * @author Oliver Eichner o.eichner{at}gmail.com
  */
 public class LooseQuadTree {
 
     // parent node
-    static final int PN = -1;
+    private static final int PN = -1;
     // top left, quadrant 1
-    static final int TL = 0;
+    private static final int TL = 0;
     // top right, quadrant 2
-    static final int TR = 1;
+    private static final int TR = 1;
     // bottom left, quadrant 3
-    static final int BL = 2;
+    private static final int BL = 2;
     // bottom right, quadrant 4
-    static final int BR = 3;
-
-    public HashSet<Rectangle> debugRectangles = new HashSet<Rectangle>();
-
-
+    private static final int BR = 3;
+    private static final String TAG = LooseQuadTree.class.getSimpleName();
     private final HashSet<LQTObject> _objects = new HashSet<LQTObject>();
     private final HashSet<LQTObject> _objects2 = new HashSet<LQTObject>();
     private final HashSet<LQTObject> _neighborObjects = new HashSet<LQTObject>();
     private final HashSet<LooseQuad> _neighbors = new HashSet<LooseQuad>();
-
-    private static final String TAG = LooseQuadTree.class.getSimpleName();
-    public LooseQuad rootNode;
-    float zValue = 0;
-
-    float maxDepth = 5;
-    float k = 2;
-
-    private Vector2 tmpVec2 = new Vector2();
+    public HashSet<Rectangle> debugRectangles = new HashSet<Rectangle>();
+    private LooseQuad rootNode;
     public boolean debugDrawBounds = false;
+    float zValue = 0;
+    private float maxDepth = 5;
+    private float k = 2;
+    private Vector2 tmpVec2 = new Vector2();
 
     public LooseQuadTree(float width, float height, int maxDepth) {
         Gdx.app.log(TAG, "w/h:" + width);
@@ -81,40 +78,16 @@ public class LooseQuadTree {
      * @param widget the {@link LQTObject} to store
      */
     public boolean insert(LQTObject widget) {
-//		Gdx.app.log(TAG,
-//				"insert widget: " + widget.position + " size: "
-//						+ widget.bounds);
-        return insertOrRemove(widget,true);
+        return insertOrRemove(widget, true);
     }
 
     /**
      * Delete first {@link LQTObject} from the tree
      *
-     * @param object
+     * @param object the {@link com.nGame.utils.quadtree.LQTObject} to delete
      */
     public boolean delete(LQTObject object) {
-
-
-        if (!insertOrRemove(object, false)) {
-//				Gdx.app.log(TAG, "could not delete object @[" + object.getClass().getSimpleName() + "]"
-//						+ " size: " + object.getBounds());
-            //showObjectsInTree();
-            return false;
-        } else {
-            return true;
-        }
-
-
-    }
-
-    private void showObjectsInTree() {
-        synchronized (_objects2) {
-            _objects2.clear();
-            getObjects(rootNode, _objects2);
-            for (LQTObject wdg : _objects2) {
-                Gdx.app.log(TAG, "object in tree: " + wdg.getClass().getSimpleName());
-            }
-        }
+        return insertOrRemove(object, false);
     }
 
     /**
@@ -135,15 +108,14 @@ public class LooseQuadTree {
         while (currentNode.depth < lvl) {
             int index = findQuadIndex(oldBounds, currentNode);
 
-//			Gdx.app.log(TAG, "index["+widget.getClass().getSimpleName()+"]: " + index);
-
             LooseQuad nodeFound = currentNode.nodes[index];
+
             //checkbounds to allow something outside of the root bounds
             //if (nodeFound.bound.contains(oldBounds)) {
             currentNode = nodeFound;
             //} else {
-//                break;
-//            }
+            //  break;
+            //}
 
         }
 
@@ -168,10 +140,10 @@ public class LooseQuadTree {
      *
      * @param rect        the {@link Rectangle} from the {@link LQTObject}
      * @param currentNode the parent {@link LooseQuad}
-     * @return the index of the childnode.
+     * @return the index of the childNode.
      */
     private int findQuadIndex(Rectangle rect, LooseQuad currentNode) {
-        int retVal = PN;
+        int retVal;
         float bWidth = currentNode.bound.width;
         float bHeight = currentNode.bound.height;
         float cX = currentNode.bound.x + bWidth / 2;
@@ -179,29 +151,22 @@ public class LooseQuadTree {
 
         rect.getCenter(tmpVec2);
         if (tmpVec2.x > cX) {
-//            Gdx.app.log(TAG, "obj cx: "+ rect.getCenterX() + " > node cx: " + cX);
             // right
             if (tmpVec2.y > cY) {
-//				 Gdx.app.log(TAG, "top right");
                 retVal = TR;
             } else {
-//				 Gdx.app.log(TAG, "bottom right");
                 retVal = BR;
             }
 
         } else {
-//            Gdx.app.log(TAG, "obj cx: "+ rect.getCenterX() + " < node cx: " + cX);
             // left
             if (tmpVec2.y > cY) {
-//				 Gdx.app.log(TAG, "top left");
                 retVal = TL;
             } else {
-//				 Gdx.app.log(TAG, "bottom, left");
                 retVal = BL;
 
             }
         }
-        // }
         return retVal;
 
     }
@@ -257,7 +222,7 @@ public class LooseQuadTree {
                 return new Rectangle(quad.locationBound.x + width,
                         quad.locationBound.y + height, width, height);
             default:
-                Gdx.app.log(TAG, "could not determin split quad [" + i + "] for quad ["
+                Gdx.app.log(TAG, "could not determine split quad [" + i + "] for quad ["
                         + quad.toString() + "] ");
 
                 return null;
@@ -271,7 +236,7 @@ public class LooseQuadTree {
      * @param collisions the List to store the collision pairs
      */
     public void findObjectObjectCollision(
-            ArrayList<Pair<LQTObject , LQTObject>> collisions) {
+            ArrayList<Pair<LQTObject, LQTObject>> collisions) {
         findObjectObjectCollision(rootNode, collisions);
     }
 
@@ -282,7 +247,7 @@ public class LooseQuadTree {
      * @param collisions the List to store the collision pairs
      */
     private void findObjectObjectCollision(LooseQuad node,
-                                           ArrayList<Pair<LQTObject , LQTObject>> collisions) {
+                                           ArrayList<Pair<LQTObject, LQTObject>> collisions) {
         if (node != null) {
 
             if (node.hasObject()) {
@@ -301,17 +266,17 @@ public class LooseQuadTree {
     /**
      * Acquire collisions for first {@link LooseQuad} which contains an {@link LQTObject}.
      *
-     * @param quad       the {@link LooseQuad} containg at least one {@link LQTObject}
+     * @param quad       the {@link LooseQuad} containing at least one {@link LQTObject}
      * @param collisions the List to store the collision pairs
      */
-    public void potentialObjectObjectCollision(LooseQuad quad,
-                                               ArrayList<Pair<LQTObject , LQTObject>> collisions) {
+    void potentialObjectObjectCollision(LooseQuad quad,
+                                        ArrayList<Pair<LQTObject, LQTObject>> collisions) {
         _objects.clear();
         _neighbors.clear();
         _neighborObjects.clear();
 
         // get node/child objects
-        if (quad.getObjectCount() > 1 || !quad.isLeafe()) {
+        if (quad.getObjectCount() > 1 || !quad.isLeaf()) {
 
             getObjects(quad, _objects);
 
@@ -326,68 +291,27 @@ public class LooseQuadTree {
             }
         }
 
+        //int objsLen = _objects.size();
+        //int nobjsLen = _neighborObjects.size();
 
-        // build compare list
-
-        int objsLen = _objects.size();
-        int nobjsLen = _neighborObjects.size();
-
-//        Iterator objectIteratorA=_objects.iterator();
-
-
-        int cnt = 0, cnt2 = 0;
+        int cnt = 0, cnt2;
         for (LQTObject objA : _objects) {
-
-//            LQTObject objA = objectIteratorA.next();
-
-            //node objects
-//            Iterator objectIteratorB=_objects.iterator();
             cnt2 = 0;
             for (LQTObject objB : _objects) {
                 if (cnt2 < cnt + 1) {
                     cnt2++;
                     continue;
                 }
-//                LQTObject objB = objectIteratorB.next();
-//                if (objA.getClass() != objB.getClass()) {
-//                    if( (i instanceof Collectible && ! (j instanceof Charly)) || (j instanceof Collectible && ! (i instanceof Charly)) ){
-//                        continue;
-//                    } else {
-                collisions.add(new Pair<LQTObject , LQTObject>(objA, objB));
-//                    }
-//                }
+                collisions.add(new Pair<LQTObject, LQTObject>(objA, objB));
             }
 
             cnt++;
             //neighbor objects
 
             for (LQTObject objB : _neighborObjects) {
-
-//                if (objA.getClass() != objB.getClass()) {
-//                    if( (i instanceof Collectible && ! (j instanceof Charly)) || (j instanceof Collectible && ! (i instanceof Charly)) ){
-//                        continue;
-//                    } else {
-                collisions.add(new Pair<LQTObject , LQTObject>(objA, objB));
-//                    }
-//                }
+                collisions.add(new Pair<LQTObject, LQTObject>(objA, objB));
             }
-
-
         }
-
-        // self objects and enighbor objects
-//        for (LQTObject i : _objects) {
-//            for (LQTObject j : _neighborObjects) {
-//                if (i.getClass() != j.getClass()) {
-////                    if( (i instanceof Collectible && ! (j instanceof Charly)) || (j instanceof Collectible && ! (i instanceof Charly)) ){
-////                        continue;
-////                    } else {
-//                        collisions.add(new Pair<LQTObject , LQTObject>(i, j));
-////                    }
-//                }
-//            }
-//        }
-
     }
 
     /**
@@ -440,7 +364,7 @@ public class LooseQuadTree {
      * @param node the {@link LooseQuad} to get the neighbor for
      * @return the neighbor {@link LooseQuad}
      */
-    public LooseQuad getLeftNeighbor(LooseQuad node) {
+    LooseQuad getLeftNeighbor(LooseQuad node) {
         // check if root node
         if (node.parentNode == null)
             return null;
@@ -452,16 +376,16 @@ public class LooseQuadTree {
             // get neighbor from parent
             return node.parentNode.nodes[node.childID - 1];
         } else {
-            // We dont have first neighbor on this level, ask parent for its
+            // We don't have first neighbor on this level, ask parent for its
             // neighbor
             LooseQuad parentNeighbor = getLeftNeighbor(node.parentNode);
 
-            // Bail if we didnt find first neighbor
+            // Bail if we didn't find first neighbor
             if (parentNeighbor == null)
                 return null;
 
             // has Previous , has Children , not Leaf?
-            if (!parentNeighbor.isLeafe()) {
+            if (!parentNeighbor.isLeaf()) {
                 // yes, return found neighbors child
                 return parentNeighbor.nodes[node.childID + 1];
             } else {
@@ -477,7 +401,7 @@ public class LooseQuadTree {
      * @param node the {@link LooseQuad} to get the neighbor for
      * @return the neighbor {@link LooseQuad}
      */
-    public LooseQuad getRightNeighbor(LooseQuad node) {
+    LooseQuad getRightNeighbor(LooseQuad node) {
         // check if root node
         if (node.parentNode == null)
             return null;
@@ -489,7 +413,7 @@ public class LooseQuadTree {
             // get neighbor from parent
             return node.parentNode.nodes[node.childID + 1];
         } else {
-            // We dont have first neighbor on this level, ask parent for its
+            // We don't have first neighbor on this level, ask parent for its
             // neighbor
             LooseQuad parentNeighbor = getRightNeighbor(node.parentNode);
 
@@ -498,7 +422,7 @@ public class LooseQuadTree {
                 return null;
 
             // has Previous , has Children , not Leaf?
-            if (!parentNeighbor.isLeafe()) {
+            if (!parentNeighbor.isLeaf()) {
                 // yes, return found neighbors child
                 return parentNeighbor.nodes[node.childID - 1];
             } else {
@@ -514,7 +438,7 @@ public class LooseQuadTree {
      * @param node the {@link LooseQuad} to get the neighbor for
      * @return the neighbor {@link LooseQuad}
      */
-    public LooseQuad getTopNeighbor(LooseQuad node) {
+    LooseQuad getTopNeighbor(LooseQuad node) {
         // check if root node
         if (node.parentNode == null)
             return null;
@@ -526,7 +450,7 @@ public class LooseQuadTree {
             // get neighbor from parent
             return node.parentNode.nodes[node.childID - 2];
         } else {
-            // We dont have first neighbor on this level, ask parent for its
+            // We don't have first neighbor on this level, ask parent for its
             // neighbor
             LooseQuad parentNeighbor = getTopNeighbor(node.parentNode);
 
@@ -535,7 +459,7 @@ public class LooseQuadTree {
                 return null;
 
             // has Previous , has Children , not Leaf?
-            if (!parentNeighbor.isLeafe()) {
+            if (!parentNeighbor.isLeaf()) {
                 // yes, return found neighbors child
                 return parentNeighbor.nodes[node.childID + 2];
             } else {
@@ -551,7 +475,7 @@ public class LooseQuadTree {
      * @param node the {@link LooseQuad} to get the neighbor for
      * @return the neighbor {@link LooseQuad}
      */
-    public LooseQuad getBottomNeighbor(LooseQuad node) {
+    LooseQuad getBottomNeighbor(LooseQuad node) {
         // check if root node
         if (node.parentNode == null)
             return null;
@@ -563,7 +487,7 @@ public class LooseQuadTree {
             // get neighbor from parent
             return node.parentNode.nodes[node.childID + 2];
         } else {
-            // We dont have first neighbor on this level, ask parent for its
+            // We don't have first neighbor on this level, ask parent for its
             // neighbor
             LooseQuad parentNeighbor = getBottomNeighbor(node.parentNode);
 
@@ -572,7 +496,7 @@ public class LooseQuadTree {
                 return null;
 
             // has Previous , has Children , not Leaf?
-            if (!parentNeighbor.isLeafe()) {
+            if (!parentNeighbor.isLeaf()) {
                 // yes, return found neighbors child
                 return parentNeighbor.nodes[node.childID - 2];
             } else {
@@ -588,7 +512,7 @@ public class LooseQuadTree {
      * @param node the {@link LooseQuad} to get the neighbor for
      * @return the neighbor {@link LooseQuad}
      */
-    public LooseQuad getBottomLeftNeighbor(LooseQuad node) {
+    LooseQuad getBottomLeftNeighbor(LooseQuad node) {
         // check if root node
         if (node.parentNode == null)
             return null;
@@ -600,7 +524,7 @@ public class LooseQuadTree {
             // get neighbor from parent
             return node.parentNode.nodes[node.childID + 1];
         } else {
-            // We dont have first neighbor on this level, ask parent for its
+            // We don't have first neighbor on this level, ask parent for its
             // neighbor
 
             LooseQuad parentNeighbor = null;
@@ -629,7 +553,7 @@ public class LooseQuadTree {
                 return null;
 
             // has Previous , has Children , not Leaf?
-            if (!parentNeighbor.isLeafe()) {
+            if (!parentNeighbor.isLeaf()) {
                 // yes, return found neighbors child
                 return parentNeighbor.nodes[node.childID + idOffset];
             } else {
@@ -645,7 +569,7 @@ public class LooseQuadTree {
      * @param node the {@link LooseQuad} to get the neighbor for
      * @return the neighbor {@link LooseQuad}
      */
-    public LooseQuad getBottomRightNeighbor(LooseQuad node) {
+    LooseQuad getBottomRightNeighbor(LooseQuad node) {
         // check if root node
         if (node.parentNode == null)
             return null;
@@ -657,7 +581,7 @@ public class LooseQuadTree {
             // get neighbor from parent
             return node.parentNode.nodes[node.childID + 3];
         } else {
-            // We dont have first neighbor on this level, ask parent for its
+            // We don't have first neighbor on this level, ask parent for its
             // neighbor
 
             LooseQuad parentNeighbor = null;
@@ -686,7 +610,7 @@ public class LooseQuadTree {
                 return null;
 
             // not Leaf?
-            if (!parentNeighbor.isLeafe()) {
+            if (!parentNeighbor.isLeaf()) {
                 // yes, return found neighbors child
                 return parentNeighbor.nodes[node.childID + idOffset];
             } else {
@@ -702,7 +626,7 @@ public class LooseQuadTree {
      * @param node the {@link LooseQuad} to get the neighbor for
      * @return the neighbor {@link LooseQuad}
      */
-    public LooseQuad getTopLeftNeighbor(LooseQuad node) {
+    LooseQuad getTopLeftNeighbor(LooseQuad node) {
         // check if root node
         if (node.parentNode == null)
             return null;
@@ -714,7 +638,7 @@ public class LooseQuadTree {
             // get neighbor from parent
             return node.parentNode.nodes[node.childID - 3];
         } else {
-            // We dont have first neighbor on this level, ask parent for its
+            // We don't have first neighbor on this level, ask parent for its
             // neighbor
 
             LooseQuad parentNeighbor = null;
@@ -743,7 +667,7 @@ public class LooseQuadTree {
                 return null;
 
             // has Previous , has Children , not Leaf?
-            if (!parentNeighbor.isLeafe()) {
+            if (!parentNeighbor.isLeaf()) {
                 // yes, return found neighbors child
                 return parentNeighbor.nodes[node.childID + idOffset];
             } else {
@@ -759,7 +683,7 @@ public class LooseQuadTree {
      * @param node the {@link LooseQuad} to get the neighbor for
      * @return the neighbor {@link LooseQuad}
      */
-    public LooseQuad getTopRightNeighbor(LooseQuad node) {
+    LooseQuad getTopRightNeighbor(LooseQuad node) {
         // check if root node
         if (node.parentNode == null)
             return null;
@@ -771,7 +695,7 @@ public class LooseQuadTree {
             // get neighbor from parent
             return node.parentNode.nodes[node.childID - 1];
         } else {
-            // We dont have first neighbor on this level, ask parent for its
+            // We don't have first neighbor on this level, ask parent for its
             // neighbor
 
             LooseQuad parentNeighbor = null;
@@ -795,12 +719,12 @@ public class LooseQuadTree {
 
             }
 
-            // Bail if we didnt find first neighbor
+            // Bail if we didn't find first neighbor
             if (parentNeighbor == null)
                 return null;
 
             // has Previous , has Children , not Leaf?
-            if (!parentNeighbor.isLeafe()) {
+            if (!parentNeighbor.isLeaf()) {
                 // yes, return found neighbors child
                 return parentNeighbor.nodes[node.childID + idOffset];
             } else {
@@ -846,7 +770,7 @@ public class LooseQuadTree {
                     retrieve(returnObjects, pRect, level, node);
             }
         }
-        if (index != -1 && !currentNode.isLeafe()) {
+        if (index != -1 && !currentNode.isLeaf()) {
 
             retrieve(returnObjects, pRect, level, currentNode.nodes[index]);
         }
@@ -899,7 +823,7 @@ public class LooseQuadTree {
 
             //bound.resize(k * boundary.width, k * boundary.height);
 
-            nodes = new LooseQuad[]{null,null,null,null};
+            nodes = new LooseQuad[]{null, null, null, null};
         }
 
 
@@ -949,7 +873,7 @@ public class LooseQuadTree {
          * Get an {@link LQTObject} by index
          *
          * @param i the index for the {@link LQTObject}
-         * @return the {@link LQTObject}. If it dosnt exist null will be returned
+         * @return the {@link LQTObject}. If it doesn't exist null will be returned
          */
         public LQTObject getObject(int i) {
             return objects.get(i);
@@ -963,7 +887,7 @@ public class LooseQuadTree {
             hasNewObject = false;
         }
 
-        public boolean isLeafe() {
+        public boolean isLeaf() {
             return nodes[0] == null && nodes[1] == null && nodes[2] == null && nodes[3] == null;
         }
 

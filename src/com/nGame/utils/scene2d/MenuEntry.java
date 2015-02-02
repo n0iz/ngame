@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.nGame.utils.ng.Assets;
-import com.nGame.utils.Utils;
 import com.nGame.utils.ng.Log;
 
 public abstract class MenuEntry extends Label {

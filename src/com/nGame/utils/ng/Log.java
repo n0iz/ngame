@@ -38,11 +38,11 @@ public class Log {
      * @param logtype
      * @param text
      */
-    public static void log(int logtype, String text) {
+    private static void log(int logtype, String text) {
         try {
-            String name="";
-            String caller="";
-            int lineNumber=0;
+            String name;
+            String caller;
+            int lineNumber;
 
             int stackdeep = 3;
 

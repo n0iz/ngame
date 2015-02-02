@@ -1,13 +1,8 @@
 package com.nGame.utils.ng;
 
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.ControllerAdapter;
-import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.SnapshotArray;
@@ -30,9 +25,9 @@ public abstract class MenuScreenNG extends ScreenNG {
     private MenuEntry entry;
 
 
-    int textAlign;
+    private int textAlign;
 
-    int menuAlign;
+    private int menuAlign;
 
 /*        ButtonImage loginGooglePlay;
         ButtonImage googleAchievements;

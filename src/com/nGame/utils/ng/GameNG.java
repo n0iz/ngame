@@ -5,9 +5,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.nGame.utils.*;
 import com.nGame.utils.ng.input.GamePads;
-import com.nGame.utils.ng.input.InputEventManager;
 
 import java.util.EmptyStackException;
 import java.util.HashMap;
@@ -19,10 +17,10 @@ import java.util.Stack;
 public abstract class GameNG implements ApplicationListener {
     public static GameNG I;
     public boolean ongoingTransition = false;
-    protected ScreenNG screen;
+    private ScreenNG screen;
     private ScreenNG nextScreen;
 
-    public static LoadingScreen loadingScreen;
+    private static LoadingScreen loadingScreen;
     public static MenuScreenNG menuScreen;
     public static PreferendeScreenNG preferenceScreen;
     public static ScreenNG gameScreen;
@@ -139,7 +137,7 @@ public abstract class GameNG implements ApplicationListener {
     }
 
 
-    protected void switchToScreen(ScreenNG screen, Transition transition) {
+    void switchToScreen(ScreenNG screen, Transition transition) {
         if(screen==this.screen){
             return;
         }
@@ -232,7 +230,7 @@ public abstract class GameNG implements ApplicationListener {
      *
      * @param screenNext may be {@code null}
      */
-    protected void setScreen(ScreenNG screenNext) {
+    void setScreen(ScreenNG screenNext) {
 
 
         if (screen != null) {

@@ -9,10 +9,10 @@ import com.badlogic.gdx.math.Vector3;
  * borrowed from libgdx ParallaxTest
  */
 public class ParallaxCam extends OrthographicCamera {
-    Matrix4 parallaxView = new Matrix4();
-    Matrix4 parallaxCombined = new Matrix4();
-    Vector3 tmp = new Vector3();
-    Vector3 tmp2 = new Vector3();
+    private Matrix4 parallaxView = new Matrix4();
+    private Matrix4 parallaxCombined = new Matrix4();
+    private Vector3 tmp = new Vector3();
+    private Vector3 tmp2 = new Vector3();
 
     public ParallaxCam(float viewportWidth, float viewportHeight) {
         super(viewportWidth, viewportHeight);

@@ -12,7 +12,7 @@ import com.nGame.utils.ng.Assets;
 import java.text.NumberFormat;
 
 public abstract class PreferenceSlider extends Table {
-    public Slider slider;
+    private Slider slider;
     private Label labelTitle;
     private Label labelValue;
 
