@@ -1,5 +1,6 @@
 package com.nGame.utils.ng;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerAdapter;
@@ -16,6 +17,7 @@ import com.nGame.utils.ng.input.InputResponceEvent;
 import com.nGame.utils.ng.input.XboxController;
 import com.nGame.utils.scene2d.MenuEntry;
 import com.nGame.utils.scene2d.MenuTable;
+import com.nGame.utils.scene2d.WindowNG;
 
 
 /**
@@ -28,6 +30,10 @@ public abstract class MenuScreenNG extends ScreenNG {
     private Table bottomTable;
    // protected ControllerAdapter defaultAdapter;
     private MenuEntry entry;
+
+
+
+
 
 
     int textAlign;
@@ -75,6 +81,9 @@ public abstract class MenuScreenNG extends ScreenNG {
 
 
         stage.addActor(rootTable);
+
+
+
 
 
         /*        bottomTable = new Table();
@@ -135,6 +144,9 @@ public abstract class MenuScreenNG extends ScreenNG {
 
 
     }
+
+
+
     public void addMenuEntry(MenuEntry entry){
         tableMenu.addEntry(entry);
     }
@@ -155,7 +167,7 @@ public abstract class MenuScreenNG extends ScreenNG {
                 googleAchievements.setVisible(false);
                 googleAchievementsLabel.setVisible(false);
             }
-            if(googleLeaderboard.isVisible()) {
+            if(googleLeaderboard.isVisible()){
                 googleLeaderboard.setVisible(false);
                 googleLeaderboardLabel.setVisible(false);
             }
@@ -197,7 +209,9 @@ public abstract class MenuScreenNG extends ScreenNG {
         ieManager.addInputResponseEvent(new InputResponceEvent("ok") {
             @Override
             public void onAction(float value) {
-                entry.onAction();
+                if(entry!=null) {
+                    entry.onAction();
+                }
             }
         });
 
@@ -267,7 +281,12 @@ public abstract class MenuScreenNG extends ScreenNG {
     @Override
     public void show() {
         super.show();
-        setupGamePad();
+        if(!GameNG.I.ongoingTransition) {
+            WindowNG win = new WindowNG("Title", Assets.I.skin);
+            win.pack();
+            stage.addActor(win);
+            setupGamePad();
+        }
     }
 
     @Override
@@ -277,4 +296,6 @@ public abstract class MenuScreenNG extends ScreenNG {
         ieManager.removeEvent("up");
         ieManager.removeEvent("down");
     }
+
+
 }
