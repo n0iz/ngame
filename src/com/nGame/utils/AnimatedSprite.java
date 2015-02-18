@@ -13,15 +13,15 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
  */
 public class AnimatedSprite extends Sprite {
 
-    Animation animation;
+    private Animation animation;
     private Sprite lastFrame = new Sprite();
-    float frameTime = 0;
+    private float frameTime = 0;
 
-    boolean running = true;
-    public boolean resize = true;
+    private boolean running = true;
+    private boolean resize = true;
 
-    boolean updateOnDraw = true;
-    boolean centered = true;
+    private boolean updateOnDraw = true;
+    private boolean centered = true;
     private boolean facecRight;
     private float width;
     private float height;
@@ -37,7 +37,7 @@ public class AnimatedSprite extends Sprite {
         this.animation = animation;
     }
 
-    public void update(float delta) {
+    void update(float delta) {
         if (running) {
             lastFrame.set(this);
             frameTime += delta;

@@ -40,7 +40,7 @@ public enum Assets {
     private HashMap<String,TextureAtlas> textureAtlasMap = new HashMap<String,TextureAtlas>();
 
     public Skin skin;
-    private HashMap<String, BitmapFont> bmpfonts= new HashMap<String,BitmapFont>();;
+    private HashMap<String, BitmapFont> bmpfonts= new HashMap<String,BitmapFont>();
 
     Assets() {
         manager = new AssetManager();

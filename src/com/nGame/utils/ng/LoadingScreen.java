@@ -34,7 +34,6 @@ public class LoadingScreen extends ScreenNG {
     private Label pressLable;
     private boolean isRealoading;
 
-    private ControllerAdapter loginController;
 
     enum State {
         LOADING,
@@ -103,14 +102,6 @@ public class LoadingScreen extends ScreenNG {
         table.add(pressLable);
 
         setState(State.LOADING);
-
-        loginController = new ControllerAdapter(){
-            @Override
-            public boolean buttonDown(Controller controller, int buttonIndex) {
-
-                return super.buttonDown(controller, buttonIndex);
-            }
-        };
     }
 
     /**
@@ -183,7 +174,7 @@ public class LoadingScreen extends ScreenNG {
                 ieManager.addInputResponseEvent(new InputResponceEvent("start") {
                     @Override
                     public void onAction(float value) {
-                        GameNG.I.switchToScreen(GameNG.I.menuScreen, GameNG.Transition.FADE);
+                        GameNG.I.switchToScreen(GameNG.menuScreen, GameNG.Transition.FADE);
                     }
                 });
                 try {
@@ -238,7 +229,7 @@ public class LoadingScreen extends ScreenNG {
 
 
                 if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
-                    GameNG.I.switchToScreen(GameNG.I.menuScreen, GameNG.Transition.FADE);
+                    GameNG.I.switchToScreen(GameNG.menuScreen, GameNG.Transition.FADE);
                 }
                 break;
             case RELOAD:

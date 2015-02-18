@@ -5,9 +5,9 @@ package com.nGame.utils.ng.input;
  */
 public class GamePadMapping {
 
-    int[] buttonMap;
+    private int[] buttonMap;
 
-    int[] axisMap;
+    private int[] axisMap;
 
 
     public GamePadMapping(int buttons, int axis) {

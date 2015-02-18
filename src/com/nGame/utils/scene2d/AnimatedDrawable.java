@@ -11,8 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
  *         Date: 23.11.13 - 16:23
  */
 public class AnimatedDrawable extends BaseDrawable {
-    Animation animation;
-    float stateTime = 0;
+    private Animation animation;
+    private float stateTime = 0;
 
     public AnimatedDrawable(Animation ani) {
         this.animation = ani;

@@ -13,7 +13,7 @@ import com.nGame.utils.ng.Log;
 /**
  * Created by oli on 23.09.2014.
  */
-public class Pager extends ScrollPane {
+class Pager extends ScrollPane {
 
     private int pages = 0;
     private Table pageTable;

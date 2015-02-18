@@ -1,6 +1,7 @@
 package com.nGame.utils;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -21,7 +22,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
  */
 public class Render2Texture {
 
-    public static FrameBuffer frameBuffer;
+    private static FrameBuffer frameBuffer;
     public static TextureRegion fboRegion;
     private static BitmapFont font;
     private static Batch batch;
@@ -72,7 +73,7 @@ public class Render2Texture {
 
         //Gdx.gl20.glColorMask(false, false, false, true);//This ensures that only alpha will be effected
         Gdx.gl20.glClearColor(0, 0, 0, 0);//alphaValue - Value to which you need to clear
-        Gdx.gl20.glClear(Gdx.gl20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
 
@@ -100,7 +101,7 @@ public class Render2Texture {
 
         //Gdx.gl20.glColorMask(false, false, false, true);//This ensures that only alpha will be effected
         Gdx.gl20.glClearColor(0, 0, 0, 0);//alphaValue - Value to which you need to clear
-        Gdx.gl20.glClear(Gdx.gl20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
 

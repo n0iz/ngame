@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
  *         Date: 23.11.13 - 16:09
  */
 public class AnimatedImage extends Image {
-    AnimatedDrawable drawable;
+    private AnimatedDrawable drawable;
 
     public AnimatedImage(AnimatedDrawable drawable) {
         super(drawable);

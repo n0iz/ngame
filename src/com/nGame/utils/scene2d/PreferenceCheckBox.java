@@ -9,10 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.nGame.utils.ng.Assets;
 
-public abstract class PreferenceCheckBox extends Table {
+abstract class PreferenceCheckBox extends Table {
     private CheckBox box;
 
-    public PreferenceCheckBox(String labelText, int width, int height) {
+    PreferenceCheckBox(String labelText, int width, int height) {
         super(Assets.I.skin);
         defaults();
         //setFillParent(true);
@@ -48,5 +48,5 @@ public abstract class PreferenceCheckBox extends Table {
         box.setChecked(checked);
     }
 
-    public abstract void onChange(boolean checked);
+    protected abstract void onChange(boolean checked);
 }

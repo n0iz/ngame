@@ -11,11 +11,11 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 /**
  * Created by oli on 06.03.14.
  */
-public class StageGamePad extends Stage {
+class StageGamePad extends Stage {
 
-    ControllerAdapter controllerAdapter;
+    private ControllerAdapter controllerAdapter;
 
-    GamePadMapping mapping;
+    private GamePadMapping mapping;
 
 
     public StageGamePad(GamePadMapping mapping) {

@@ -2,9 +2,7 @@ package com.nGame.utils.ng;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.controllers.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -127,7 +125,7 @@ public abstract class ScreenNG implements Screen {
         stage.dispose();
     }
 
-    protected void resetScreen(){
+    void resetScreen(){
 
         stage.addAction(Actions.parallel(Actions.fadeIn(0), Actions.moveTo(0, 0), Actions.color(Color.WHITE)));
     }
