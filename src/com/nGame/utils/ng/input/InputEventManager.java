@@ -106,9 +106,8 @@ public class InputEventManager extends InputListener implements ControllerListen
      *
      * @param keycode {@link com.badlogic.gdx.Input.Keys}
      * @param eventIdentifier
-     * @throws Exception
      */
-    public void bindKeyUp(int keycode, String eventIdentifier) throws Exception {
+    public void bindKeyUp(int keycode, String eventIdentifier) {
         if(events.containsKey(eventIdentifier)){
             if(keyUpBinding.containsKey(keycode)){
                 Log.i("Key " + keycode + " will be remapped to " + eventIdentifier);
@@ -119,7 +118,6 @@ public class InputEventManager extends InputListener implements ControllerListen
             keyUpBinding.put(keycode,eventIdentifier);
         } else {
             Log.e("Event unknown: " + eventIdentifier);
-            throw new Exception("event identifier unknown");
         }
     }
 
