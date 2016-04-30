@@ -1,7 +1,7 @@
 package com.nGame.utils.scene2d;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.utils.Align;
 import com.nGame.utils.ng.Assets;
 
 public class MenuTable extends Table {
