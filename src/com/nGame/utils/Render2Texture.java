@@ -50,7 +50,7 @@ public class Render2Texture {
 
         if (font == null) {
             font = new BitmapFont(Gdx.files.internal("data/font/font.fnt"));
-            font.setScale(.25f);
+            font.getData().setScale(.25f);
         }
         if (batch == null) {
             batch = new SpriteBatch();
